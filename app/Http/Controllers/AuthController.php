@@ -64,7 +64,8 @@ class AuthController extends Controller
 
     public function updateToken()
     {
-		$access_token = auth()->claims(['xtype' => 'auth'])->refresh(true,true);
+        $access_token = request()->token;
+		// $access_token = auth()->claims(['xtype' => 'auth'])->refresh(true,true);
 		auth()->setToken($access_token); 
 
 
@@ -82,7 +83,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'accessToken'   => $token,
-            'refresh_token' => auth()->claims([
+            'refreshToken' => auth()->claims([
                 'xtype' => 'refresh',
                 'xpair' => auth()->payload()->get('jti')
             ])
